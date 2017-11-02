@@ -1,0 +1,15 @@
+{
+  "name": "mls-haxball",
+  "version": "0.0.1",
+  "description": "A node.js website for the MLS Haxball league.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/TheMaster99/mls-haxball.git)"
+  },
+  "author": "Lukas Short",
+  "license": "MIT"
+}
