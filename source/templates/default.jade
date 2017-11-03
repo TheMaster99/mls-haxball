@@ -2,10 +2,12 @@ doctype html
 html
   head
     link(rel='stylesheet', href='/css/index.css')
-    title MLS Haxball
+    block head
+      - var title = page ? 'MLS Haxball - ' + page : 'MLS Haxball';
+    title #{title}
   body
     .header
-      h1.page-title MLS Haxball
+      h1.page-title #{title}
 
     ul.nav
       li: a(href='/') Home
