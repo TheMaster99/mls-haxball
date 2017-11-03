@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='/css/index.css')
+    title MLS Haxball
+  body
+    .header
+      h1.page-title MLS Haxball
+
+    ul.nav
+      li: a(href='/') Home
+      li: a(href='/about') About
+      li: a(href='/standings') League Standings
+      li: a(href='/cup') Open Cup
+      li: a(href='/teams') Teams
+      li: a(href='players') Players
+    
+    .main-content
+      block content
+
+    .footer
+      p
+        | Website created by Lukas Short (aka TheMaster99). Github repository can be found at 
+        a(href='https://github.com/TheMaster99/mls-haxball/') https://github.com/TheMaster99/mls-haxball/
