@@ -32,11 +32,19 @@ body {
 .nav li {
   display: inline-block;
 }
+.nav li:hover {
+  background-color: #3ab795;
+  text-decoration: underline;
+  color: #222;
+}
 .nav a {
   display: inline-block;
   padding: 20px;
   color: #fff;
   text-decoration: none;
+}
+.nav a:hover {
+  color: #222;
 }
 .main-content {
   margin: 50px auto;
