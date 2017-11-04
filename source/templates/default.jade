@@ -1,7 +1,11 @@
 doctype html
 html
   head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery/min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     link(rel='stylesheet', href='/css/index.css')
+    - var teams = {'chicago' : 'Chicago Fire', 'dc-united' : 'DC United', 'galaxy' : 'L.A. Galaxy', 'minnesota' : 'Minnesota United', 'ne-revs' : 'New England Revolution', 'phillie' : 'Philadelphia Union', 'toronto' : 'Toronto FC', 'vancouver' : 'Vancouver Whitecaps'};
     block head
       - var title = page ? 'MLS Haxball - ' + page : 'MLS Haxball';
     title #{title}
@@ -14,7 +18,13 @@ html
       li: a(href='/about') About
       li: a(href='/standings') League Standings
       li: a(href='/cup') Open Cup
-      li: a(href='/teams') Teams
+      li.dropdown.btn.btn-black
+        span
+          a(href='teams') Teams
+          span.caret
+        ul.dropdown-menu
+          each team, i in teams
+            li: a(href='/teams/#{i}') #{team}
       li: a(href='players') Players
     
     .main-content

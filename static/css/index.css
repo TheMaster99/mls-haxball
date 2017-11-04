@@ -4,6 +4,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+.dropdown:hover .dropdown-menu li {
+  display: block;
+}
 body {
   font-family: 'Source Code Pro', monospace;
 }
@@ -30,10 +37,6 @@ body {
   padding: 20px;
   color: #fff;
   text-decoration: none;
-}
-.nav a:hover {
-  background-color: #3ab795;
-  text-decoration: underline;
 }
 .main-content {
   margin: 50px auto;
