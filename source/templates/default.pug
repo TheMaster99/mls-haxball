@@ -1,8 +1,8 @@
 doctype html
 html
   head
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery/min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
     link(rel='stylesheet', href='/css/index.css')
     - var teams = {'chicago' : 'Chicago Fire', 'dc-united' : 'DC United', 'galaxy' : 'L.A. Galaxy', 'minnesota' : 'Minnesota United', 'ne-revs' : 'New England Revolution', 'phillie' : 'Philadelphia Union', 'toronto' : 'Toronto FC', 'vancouver' : 'Vancouver Whitecaps'};
@@ -13,19 +13,25 @@ html
     .header
       h1.page-title #{title}
 
-    ul.nav
-      li: a(href='/') Home
-      li: a(href='/about') About
-      li: a(href='/standings') League Standings
-      li: a(href='/cup') Open Cup
-      li.dropdown.btn.btn-black
-        span
-          a(href='teams') Teams
-          span.caret
-        ul.dropdown-menu
-          each team, i in teams
-            li: a(href='/teams/#{i}') #{team}
-      li: a(href='players') Players
+      div.nav
+        span.center-bar
+          ul
+            li: a(href='/') Home
+            li: a(href='/about') About
+            li: a(href='/standings') League Standings
+            li: a(href='/cup') Open Cup
+            li.dropdown.btn.btn-black
+              span
+                a(href='teams') Teams
+                span.caret
+              ul.dropdown-menu
+                each team, i in teams
+                  li: a(href='/teams/' + i) #{team}
+            li: a(href='players') Players
+        span.right-bar
+          ul
+            li: a(href='/register') Register
+            li: a(href='/login') Login
     
     .main-content
       block content

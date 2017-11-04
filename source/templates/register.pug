@@ -1,0 +1,25 @@
+extend default
+
+block prepend head
+  - var page = 'Register'
+
+block content
+  // register form
+  form(method='POST' action='/register')
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
+    div.form-group
+      label(for='username') User Name:
+      input#username.form-control(type='text' name='username')
+    div.form-group
+      label(for='email') Email:
+      input#email.form-control(type='email', placeholder='name@email.com' name='email')
+    div.form-group
+      label(for='pw') Password:
+      input#pw.form-control(type='password', name='password')
+    div.form-group
+      label(for='pw2') Confirm Password:
+      input#pw2.form-control(type='password', name='confirmPassword')
+    button.btn.btn(type='submit') Register

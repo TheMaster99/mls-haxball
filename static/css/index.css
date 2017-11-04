@@ -28,6 +28,22 @@ body {
 .nav {
   background: #000;
   text-align: center;
+  position: relative;
+  color: #fff;
+}
+.nav .left-bar {
+  position: absolute;
+  left: 10px;
+  display: inline-block;
+}
+.nav .center-bar {
+  float: center;
+  display: inline-block;
+}
+.nav .right-bar {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
 }
 .nav li {
   display: inline-block;

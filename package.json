@@ -8,7 +8,7 @@
     "watch-css": "stylus source/stylesheets/index.styl -o static/css -w",
     "clean": "rm -rf static/css && mkdir -p static/css",
     "build": "npm run clean && npm run build-css",
-    "watch": "npm run clean && npm run watch-css & nodemon index -e js,jade",
+    "watch": "npm run clean && npm run watch-css & nodemon index -e js,pug",
     "start": "node index"
   },
   "repository": {
@@ -19,9 +19,12 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2",
-    "jade": "^1.11.0",
+    "express-validator": "^4.3.0",
     "morgan": "^1.9.0",
     "nodemon": "^1.9.2",
+    "pg": "^7.3.0",
+    "pg-format": "^1.0.4",
+    "pug": "^2.0.0-rc.4",
     "stylus": "^0.54.5"
   }
 }

@@ -1,0 +1,15 @@
+extend default
+
+block content
+  // login form
+  form(method='POST' action='/login')
+    if errors
+        ulfor error in errors
+        li!= error.msg
+    div.form-group
+        label(for='username') User Name:
+        input#username.form-control(type='text' name='username')
+    div.form-group
+        label(for='pw') Password:
+        input#pw.form-control(type='password', name='password')
+    button.btn.btn(type='submit') Login
