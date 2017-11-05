@@ -1,15 +1,26 @@
 extend default
 
+block prepend head
+  - var page = 'Login'
+
 block content
   // login form
   form(method='POST' action='/login')
-    if errors
-        ulfor error in errors
-        li!= error.msg
+    if err != undefined
+      div.container
+        ul
+          if typeof(err) == 'string'
+            li #{err}
+          else
+            for error in err
+              li!= error.msg
     div.form-group
-        label(for='username') User Name:
-        input#username.form-control(type='text' name='username')
+      label(for='username') User Name:
+      if u != undefined
+        input#username.form-control(type='text', placeholder='Username is case-sensitive', name='username', value=u)
+      else
+        input#username.form-control(type='text', placeholder='Username is case-sensitive', name='username')
     div.form-group
-        label(for='pw') Password:
-        input#pw.form-control(type='password', name='password')
+      label(for='pw') Password:
+      input#pw.form-control(type='password', name='password')
     button.btn.btn(type='submit') Login

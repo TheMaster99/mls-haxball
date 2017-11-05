@@ -6,16 +6,26 @@ block prepend head
 block content
   // register form
   form(method='POST' action='/register')
-    if errors
-      ul
-        for error in errors
-          li!= error.msg
+    if err != undefined
+      div.container
+        ul
+          if typeof(err) == 'string'
+            li #{err}
+          else
+            for error in err
+              li!= error.msg
     div.form-group
       label(for='username') User Name:
-      input#username.form-control(type='text' name='username')
+      if u != undefined
+        input#username.form-control(type='text', placeholder='Username is case-sensitive', name='username', value=u)
+      else
+        input#username.form-control(type='text', placeholder='Username is case-sensitive', name='username')
     div.form-group
       label(for='email') Email:
-      input#email.form-control(type='email', placeholder='name@email.com' name='email')
+      if e != undefined
+        input#email.form-control(type='email', placeholder='name@email.com' name='email', value=e)
+      else
+        input#email.form-control(type='email', placeholder='name@email.com' name='email')
     div.form-group
       label(for='pw') Password:
       input#pw.form-control(type='password', name='password')
