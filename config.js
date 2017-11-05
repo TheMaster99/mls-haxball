@@ -1,9 +1,3 @@
-var config = {
-	username: 'mlshaxball',
-	password: 'mls-haxball',
-	database: 'mls-hax',
-	max: 10,
-	idleTimeoutMillis: 30000
-};
-
-module.exports = config;
+exports.DATABASE_URL = process.env.DATABASE_URL || 'postgres://mlshaxball:mls-haxball@localhost:5432/mls-hax';
+exports.max = 10;
+exports.idleTimeoutMillis = 30000;

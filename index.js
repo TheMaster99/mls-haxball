@@ -7,15 +7,8 @@ var express = require('express')
   , format = require('pg-format')
   , encrypting = require(__dirname + '/encrypting.js')
   , configFile = require(__dirname + '/config.js')
-  , config = {
-      user: configFile.username,
-      password: configFile.password,
-      database: configFile.database,
-      max: configFile.max,
-      idleTimeoutMillis: configFile.idleTimeoutMillis
-    }
-  , pool = new pg.Pool(config)
-  , dbClient
+  , url = require('url')
+  , pool, dbClient
   , pug = require('pug')
   , homePage = pug.compileFile(__dirname + '/source/templates/home.pug')
   , aboutPage = pug.compileFile(__dirname + '/source/templates/about.pug')
@@ -26,7 +19,18 @@ var express = require('express')
   , registerPage = pug.compileFile(__dirname + '/source/templates/register.pug')
   , loginPage = pug.compileFile(__dirname + '/source/templates/login.pug')
 
+const dbParams = url.parse(configFile.DATABASE_URL);
+const auth = dbParams.auth.split(':');
+const config = {
+	user: auth[0],
+	password: auth[1],
+	host: dbParams.hostname,
+	port: dbParams.port,
+	database: dbParams.pathname.split('/')[1],
+	ssl: true
+};
 
+pool = new pg.Pool(config)
 pool.connect(function (err, client, done) {
   if (err) throw err
   dbClient = client
