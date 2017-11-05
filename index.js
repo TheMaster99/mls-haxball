@@ -4,17 +4,15 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , expressValidator = require('express-validator')
   , pg = require('pg')
-  , crypto = require('crypto')
   , format = require('pg-format')
-  , PGUSER = 'mlshaxball'
-  , PGPASSWORD = 'mls-haxball'
-  , PGDATABASE = 'mls-hax'
+  , encrypting = require(__dirname + '/encrypting.js')
+  , configFile = require(__dirname + '/config.js')
   , config = {
-      user: PGUSER,
-      password: PGPASSWORD,
-      database: PGDATABASE,
-      max: 10,
-      idleTimeoutMillis: 30000
+      user: configFile.username,
+      password: configFile.password,
+      database: configFile.database,
+      max: configFile.max,
+      idleTimeoutMillis: configFile.idleTimeoutMillis
     }
   , pool = new pg.Pool(config)
   , dbClient
@@ -28,43 +26,11 @@ var express = require('express')
   , registerPage = pug.compileFile(__dirname + '/source/templates/register.pug')
   , loginPage = pug.compileFile(__dirname + '/source/templates/login.pug')
 
-function getSalt(length) {
-  return crypto.randomBytes(Math.ceil(length/2)).toString('hex').slice(0,length);
-}
-
-function sha512(password, salt) {
-  var hash = crypto.createHmac('sha512', salt);
-  hash.update(password);
-  var value = hash.digest('hex');
-  return {
-    salt:salt,
-    passwordHash:value
-  };
-}
-
-function saltHashPassword(password) {
-  var salt = getSalt(16);
-  var passwordData = sha512(password, salt);
-  return {
-    hash:passwordData.passwordHash,
-    salt:passwordData.salt
-  }
-}
 
 pool.connect(function (err, client, done) {
   if (err) throw err
   dbClient = client
 })
-
-function queryDB(query) {
-  if (dbClient) {
-    var formattedQuery = format(query)
-    dbClient.query(formattedQuery, function (err, result) {
-      if (err) throw err
-      console.log(result)
-    })
-  }else console.log("Fail")
-}
 
 app.use(logger('dev'))
 app.use(express.static(__dirname + '/static'))
@@ -162,7 +128,7 @@ app.post('/register', function (req, res) {
       pw2 = req.body.confirmPassword
 
       if (dbClient) {
-        hashedPassword = saltHashPassword(pw)
+        hashedPassword = encrypting.saltHashPassword(pw)
         query = format('INSERT INTO users (email, username, password, salt) \
                         VALUES (%1$L, %2$L, %3$L, %4$L)', email, username, hashedPassword.hash, hashedPassword.salt)
         dbClient.query(query, function (err, result) {
@@ -189,11 +155,11 @@ app.post('/login', function (req, res) {
       dbClient.query(query, function (err, result) {
         if (err) {
           throw err
-        }else {
+        }else if (result.rows[0]) {
           user = result.rows[0]
           salt = user.salt
           hashedPassword = user.password
-          hashedPW = sha512(pw, salt).passwordHash
+          hashedPW = encrypting.sha512(pw, salt).passwordHash
           if (hashedPassword == hashedPW) {
             console.log('Login successful!')
             res.redirect('/')
@@ -201,7 +167,10 @@ app.post('/login', function (req, res) {
             console.log('Login unsuccessful!')
             res.redirect('/login')
           }
-        }
+        }else {
+            console.log('Login unsuccessful!')
+            res.redirect('/login')
+          }
       })
     }
   }catch (e) {
